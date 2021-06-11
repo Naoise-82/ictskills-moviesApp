@@ -30,9 +30,9 @@ export default function FilterMoviesCard(props) {
   const classes = useStyles();
 
   const genres = [
-    {id: 1, name: "Animation"},
-    {id: 2, name: "Comedy"},
-    {id: 3, name: "Thriller"}
+    { id: 1, name: "Animation" },
+    { id: 2, name: "Comedy" },
+    { id: 3, name: "Thriller" }
   ]
 
   return (
