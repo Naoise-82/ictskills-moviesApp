@@ -1,4 +1,5 @@
 import React from "react";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -16,53 +17,73 @@ import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-    card: { maxWidth: 345 },
-    media: { height: 500 },
-    avatar: {
-        backgroundColor: "rgb(255, 0, 0)",
-    },
+  card: { maxWidth: 345 },
+  media: { height: 500 },
+  avatar: {
+    backgroundColor: "rgb(255, 0, 0)",
+  },
 });
 
 export default function MovieCard(props) {
-    const classes = useStyles();
-    const movie = props.movie;
-    return (
-        <Card className={classes.card}>
-            <CardHeader className={classes.header} title={movie.title} />
-            <CardMedia
-                className={classes.media}
-                image={
-                    movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                        : img
-                }
-            />
-            <CardContent>
-                <Grid container>
-                    <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
-                            <CalendarIcon fontSize="small" />
-                            {movie.release_date}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
-                            <StarRateIcon fontSize="small" />
-                            {"  "} {movie.vote_average}{" "}
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={null}>
-                    <FavoriteIcon color="primary" fontSize="large" />
-                </IconButton>
-                <Link to={`/movies/${movie.id}`}>
-                    <Button variant="outlined" size="medium" color="primary">
-                        More Info ...
-                    </Button>
-                </Link>
-            </CardActions>
-        </Card>
-    );
+  const classes = useStyles();
+  const movie = props.movie;
+
+  const handleAddToFavorite = (e) => {
+    e.preventDefault();
+    props.selectFavorite(movie.id);
+  };
+
+  return (
+    <Card className={classes.card}>
+      <CardHeader
+        className={classes.header}
+        avatar={
+          movie.favorite ? (
+            <Avatar className={classes.avatar}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : null
+        }
+        title={
+          <Typography variant="h5" component="p">
+            {movie.title}{" "}
+          </Typography>
+        }
+      />
+      <CardMedia
+        className={classes.media}
+        image={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+            : img
+        }
+      />
+      <CardContent>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography variant="h6" component="p">
+              <CalendarIcon fontSize="small" />
+              {movie.release_date}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" component="p">
+              <StarRateIcon fontSize="small" />
+              {"  "} {movie.vote_average}{" "}
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+          <FavoriteIcon color="primary" fontSize="large" />
+        </IconButton>
+        <Link to={`/movies/${movie.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
+  );
 }
