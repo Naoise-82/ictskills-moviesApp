@@ -6,6 +6,7 @@ import Spinner from '../components/spinner';
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 
 const UpcomingMoviesPage = (props) => {
+  // useQuery used to cache upcoming movies page data
   const { data, error, isLoading, isError } = useQuery('upcoming', getUpcomingMovies)
 
   if (isLoading) {
